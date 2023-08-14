@@ -16,15 +16,6 @@ except Exception:
 import shutil #Only used to del old build Folder Contents
 import signal #Catch Ctrl-C
 
-#In case the path-seperator is an escape character, double it up (Windows..)
-reg_pathsep_t = os.path.sep
-reg_pathsep = ""
-for i in reg_pathsep_t:
-    if i == "\\":
-        reg_pathsep = reg_pathsep + i*2
-    else:
-        reg_pathsep = reg_pathsep + i
-
 #Performance Evaluation
 t0 = time.time()
 procTime = 0
@@ -635,18 +626,8 @@ class Project:
 
                 if looking_for_file[0] == '\'' or looking_for_file[0] == '"':
                     looking_for_file = looking_for_file[1:-1]
-                
-                #.normcase converts all filepaths sepperators to system native ones
-                looking_for_file_t = os.path.normcase(looking_for_file)
-                #on windows, those are escape characters, sometimes. so they need to be doubled
-                looking_for_file = ""
-                for i in looking_for_file_t:
-                    if i == "\\":
-                        looking_for_file = looking_for_file + i*2
-                    else:
-                        looking_for_file = looking_for_file + i
 
-                filesearch = re.compile(reg_pathsep+looking_for_file+'\s*$')
+                filesearch = get_files_regex(looking_for_file)
                 
                 non_target_matches = [] #List of Files that weren't choosen because a fitting file in a target folder was present, only used for user printout
                 choosen_file = None #Placeholder for the include file object {"f": File, "named_as":"filename", "is_raw":False}
@@ -709,7 +690,7 @@ class Project:
                         #but dont keep going
                         if os.path.split(looking_for_file)[1] != looking_for_file:
                             looking_for_file = os.path.split(looking_for_file)[1]
-                            filesearch = re.compile("/"+looking_for_file+'\s*$')
+                            filesearch = get_files_regex(looking_for_file)
                             possible_files = []
                             find_anywhere()
                             if len(possible_files) + len(excluded_matches) > 0:
@@ -1044,7 +1025,7 @@ class Project:
         #Add extra Files to compilation
         all_taken_by_argument = []
         for j in self.extra_files:
-            arg_search = re.compile("/"+j+'\s*$')
+            arg_search = get_files_regex(j)
             how_many_added_counter = 0
             just_added = []
             for Lp in (excluded_files, neutral_files):  
@@ -1061,7 +1042,7 @@ class Project:
                 print(error_string+"No files matching extra file",j,"found")
                 exit()
             if how_many_added_counter > 1:
-                print(error_string+"Multiple files found for Extra definition", j)
+                print(error_string+"Multiple files found for Extra definition. Consider using a full relative path.", j)
                 exit()
 
         #Fill src_files and header_files with all src/header files(as File objects) in entry folders, as well as -F arguments

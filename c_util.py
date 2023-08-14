@@ -55,6 +55,14 @@ top_level_dir = os.getcwd()
 error_match = re.compile(r"fatal error: \\?\"?'?([_a-zA-Z0-9\./-]+)")
 comp_reg = re.compile(r".*comp.toml\s*$")
 include_match = re.compile(r"^[\s]*#include[^\S\r\n]*[\"<]([^\s\"\>]*)[\">]")
+#In case the path-seperator is an escape character, double it up (Windows..)
+reg_pathsep_t = os.path.sep
+reg_pathsep = ""
+for i in reg_pathsep_t:
+    if i == "\\":
+        reg_pathsep = reg_pathsep + i*2
+    else:
+        reg_pathsep = reg_pathsep + i
 
 #https://stackoverflow.com/questions/8924173/how-can-i-print-bold-text-in-python
 class color:
@@ -230,3 +238,17 @@ def chunks(l, n):
     for i in range(0, n):
         res.append(l[i::n])
     return res
+
+def get_files_regex(looking_for_file):
+    #.normcase converts all filepaths sepperators to system native ones
+    looking_for_file_t = os.path.normcase(looking_for_file)
+    #on windows, those are escape characters, sometimes. so they need to be doubled
+    looking_for_file = ""
+    for i in looking_for_file_t:
+        if i == "\\":
+            looking_for_file = looking_for_file + i*2
+        else:
+            looking_for_file = looking_for_file + i
+
+    filesearch = re.compile(reg_pathsep+looking_for_file+'\s*$')
+    return filesearch
