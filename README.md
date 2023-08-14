@@ -1,4 +1,4 @@
-# README of a Build System for C/C++ projects: comp4me
+# Comp4me - a C/C++ build System for small projects
 
 ## Dependencies:
 * python3
@@ -10,6 +10,9 @@
 optional Dependencies:
     ccache - command needs to be avaivable, for Linux just download the bin (https://ccache.dev/download.html),
         extract it, and place it in /bin
+
+## Take a look at the wiki!
+The [wiki](https://github.com/Simonrazer/comp4me/wiki/Quickstart) has a quick-start layed out. This Readme is soon to be replaced.
 
 ## Usage:
 Place this tool's files anywhere you like, but don't sepperate the present files. You may create Symbolic Links to the folder containing them.
