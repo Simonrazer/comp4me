@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+import sys
+import os
+sys.path.append(os.path.realpath(__file__))
 from c_util import *
 from threading import Thread #Multithreading
 import subprocess   #Sys commands
@@ -1411,8 +1413,7 @@ def link():
         #Add /obj, /lib Folders and precompiled filse of all relevant projects
         subproj_real_subprojdirs = [os.path.realpath(x) for x in subpro.subproject_dirs]
         for sd in all_projs:
-            if sd.main_directory == subpro.main_directory:
-                continue
+
             if sd.only_link_with_direct_parent and os.path.realpath(sd.main_directory) not in subproj_real_subprojdirs:
                 continue
             
