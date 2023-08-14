@@ -1,0 +1,4 @@
+EXCLUDES = ["program/some_stuff"]
+ENTRYPOINT = ["program"]
+CCOMP = "clang"
+CPPCOMP = "clang++"

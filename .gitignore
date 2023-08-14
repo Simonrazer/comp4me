@@ -1,0 +1,6 @@
+__pycache__/
+.**/
+example/build/**
+example/build/example#comp.toml/**
+*.out
+*.exe

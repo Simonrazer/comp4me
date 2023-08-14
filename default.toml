@@ -1,0 +1,29 @@
+#ENTRYPOINT = ["src, apps"]
+#EXCLUDES = ["tutorial"]
+#EXCLUDE_SRC = ["libs"]
+#EXCLUDED_FILES = ["src/brokenfile.cpp"]
+#NEUTRALS = ["src/somelib"]
+#AS_LIB = ["src"]
+
+#HEADER = [".hpx"]
+#C = [".ss"]
+#CPP = [".cp"]
+
+#CCOMP = "clang"
+#CPPCOMP = "clang++"
+#AR = "arm-none-eabi-ar"
+#LINKER = "g++"
+
+#CFLAGS = ["-m32"]
+#CPPFLAGS = ["CFLAGS", "-g"]
+#LINKERFLAGS = ["CPPFLAGS", "-o exe.out"]
+
+#GENERATE_EXECUTABLE = true
+#GENERATE_TEST = false
+
+#PROPAGATE = ["src/somelib"]
+#ONLY_LINK_WITH_DIRECT_PARENT = false
+
+#NEXT_CONFIG = "comp.toml"
+
+#UIC_MAKE = ["src/qt5_src"]
